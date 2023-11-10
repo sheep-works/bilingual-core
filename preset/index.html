@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraToys Presetter</title>
+    <script src="./scripts/vue.js"></script>
+    <style>
+        body {
+            padding: 30px;
+        }
+        pre {
+            background-color: blanchedalmond;
+            border: solid;
+            padding: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <label for="mode1">対象</label>
+            <select v-model="mode1" name="mode1">
+                <option v-for="md1 in selector.mode1">{{ md1 }}<option>
+            </select>
+        </div>
+        <div>
+            <label for="mode2">機能</label>
+            <select v-model="mode2" name="mode2">
+                <option v-for="md2 in selector.mode2">{{ md2 }}<option>
+            </select>
+        </div>
+        <pre><code>{{ preset }}</code></pre>
+    </div>
+    <script src="./scripts/main.js"></script>
+</body>
+</html>

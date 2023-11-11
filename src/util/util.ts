@@ -174,3 +174,18 @@ export function useResponseMessage(err: Partial<ResponseMessage>): ResponseMessa
     message: err.message || ''
   }
 }
+
+export function str2NameAndExtension(str: string): [string, string] {
+  const strs = str.split(".")
+  if (strs.length === 1) {
+    return ["", strs[0].toLowerCase()]
+  }
+  else if (strs.length === 2) {
+    return [strs[0], strs[1].toLowerCase()]
+  }
+  else {
+    const last = strs[strs.length - 1]
+    const others = strs.slice(0, strs.length - 1)
+    return [others.join("."), last.toLowerCase()]
+  }
+}

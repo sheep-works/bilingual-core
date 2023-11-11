@@ -1,0 +1,43 @@
+{
+    "description": "Officeファイルから抽出してシンプルなテキストに",
+    "mode": "OFFICE:EXTRACT",
+    "console": false,
+    "outputFile": "./demo/demo.txt",
+    "sourceFiles": [
+        "./demo/demo.docx",
+        "./demo/demo.xlsx",
+        "./demo/demo.pptx"
+    ],
+    "targetFiles": [],
+    "common": {
+        "segmentation": true,
+        "delimiters": "(。|！|？|(\\. )|(\\! )|(\\? ))",
+        "excluding": false,
+        "excludePattern": "^[０-９0-9]+$",
+        "withSeparator": false
+    },
+    "office": {
+        "word": {
+            "afterRev": true,
+            "afterRev2": true
+        },
+        "excel": {
+            "readFilledCell": true,
+            "readHiddenSheet": false
+        },
+        "ppt": {
+            "readSlide": true,
+            "readNote": true
+        }
+    },
+    "cat": {},
+    "wwc": {
+        "dupli": 1,
+        "over95": 1,
+        "over85": 1,
+        "over75": 1,
+        "over50": 1,
+        "under49": 1
+    },
+    "debug": false
+}

@@ -1,6 +1,5 @@
 // Option
 declare interface CommonOption {
-    name: string;
     segmentation: boolean;
     delimiters: string;
     excluding: boolean;
@@ -68,7 +67,7 @@ declare interface ExecuteOption {
     debug: boolean
 }
 
-declare interface ExecutableOption extends ExecuteOption{
+declare interface ExecutableOption extends ExecuteOption {
     srcFiles: ReadData[]
     tgtFiles: ReadData[]
     isExecutable: boolean

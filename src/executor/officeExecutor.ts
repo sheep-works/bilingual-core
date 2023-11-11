@@ -1,5 +1,5 @@
-import { useResponseMessage } from "../util/util"
-import { officeExtract } from "../office/officeEntry"
+import { useResponseMessage, str2NameAndExtension } from "../util/util"
+import { getOfficeContent } from "../office/officeEntry"
 
 export function officeExecutor(exec: ExecutableOption): Promise<ProceedResult> {
     return new Promise(async (resolve, reject) => {
@@ -21,21 +21,18 @@ export function officeExecutor(exec: ExecutableOption): Promise<ProceedResult> {
                     reject(message)
                 }
                 else {
+                    const [name, ext] = str2NameAndExtension(exec.output)
                     switch (exec.mode2) {
-                        case "EXTRACT txt":
-                            resolve(officeExtractTxt(res))
+                        case "EXTRACT":
+                            resolve(officeExtract(res, ext, exec.opt))
                             break
 
-                        case "EXTRACT json":
-                            resolve(officeExtractJson(res))
+                        case "ALIGN":
+                            resolve(officeAlign(res, exec.opt))
                             break
 
-                        case "ALIGN tsv":
-                            resolve(officeAlignTsv(res, exec.opt))
-                            break
-
-                        case "COUNT tsv":
-                            resolve(officeCountTsv(res))
+                        case "COUNT":
+                            resolve(officeCount(res, ext))
                             break
 
                         default: {
@@ -61,7 +58,7 @@ export function officeExecutor(exec: ExecutableOption): Promise<ProceedResult> {
 function officePreExecutor(exec: ExecutableOption): Promise<OfficeResult> {
     return new Promise(async (resolve, reject) => {
         try {
-            const office = await officeExtract(exec.srcFiles, exec.tgtFiles, exec.opt)
+            const office = await getOfficeContent(exec.srcFiles, exec.tgtFiles, exec.opt)
             resolve(office)
         } catch {
             const message = useResponseMessage({
@@ -102,18 +99,76 @@ function segPairing(sVal: string[], tVal: string[], mark: string, separation: bo
 }
 
 
-function officeConv2SimplifiedText(contents: OfficeContent[]): string[][] {
-    const results: string[][] = []
+function officeConv2SimplifiedText(contents: OfficeContent[]): string[] {
+    const results: string[] = []
     for (const file of contents) {
-        const result: string[] = [file.name]
+        const result: string[] = []
         for (const text of file.exts) {
             if (text.isActive) {
                 result.push(...text.value)
             }
         }
-        results.push(result)
+        results.push(result.join("\n"))
     }
     return results
+}
+
+function officeConv2MarkedText(contents: OfficeContent[], opt: ReadingOption): string[] {
+    const result: string[] = [];
+    for (const file of contents) {
+        result.push(file.name);
+        for (const text of file.exts) {
+            if (!text.isActive) {
+                if (file.format === 'xlsx') {
+                    if (!opt.office.excel.readHiddenSheet) {
+                        continue
+                    }
+                } else {
+                    continue;
+                }
+            }
+            let mark = '';
+            switch (text.type) {
+                case 'Word-Paragraph':
+                    mark = '_@λ_ PARAGRAPH _λ@_';
+                    break;
+
+                case 'Word-Table':
+                    mark = '_@λ_ TABLE _λ@_';
+                    break;
+
+                case 'Excel-Sheet':
+                    mark = `_@λ_ SHEET${text.position} _λ@_`;
+                    break;
+
+                case 'Excel-Shape':
+                    mark = `_@λ_ SHEET${text.position} shape _λ@_`;
+                    break;
+
+                case 'PPT-Slide':
+                    mark = `_@λ_ SLIDE${text.position} _λ@_`;
+                    break;
+
+                case 'PPT-Diagram':
+                    mark = `_@λ_ SLIDE${text.position} diagram _λ@_`;
+                    break;
+
+                case 'PPT-Chart':
+                    mark = `_@λ_ SLIDE${text.position} chart _λ@_`;
+                    break;
+
+                case 'PPT-Note':
+                    mark = `_@λ_ SLIDE${text.position} note _λ@_`;
+                    break;
+
+                default:
+                    break;
+            }
+            result.push(mark);
+            result.push(...text.value);
+        }
+    }
+    return result
 }
 
 function wordContentsConv2AlignedText(src: OfficeContent, tgt: OfficeContent, opt: ReadingOption): string[] {
@@ -241,14 +296,28 @@ function officeConv2AlignedText(srcs: OfficeContent[], tgts: OfficeContent[], op
     return aligned;
 }
 
-function officeExtractTxt(res: ProceedResult): ProceedResult {
+function officeExtract(res: ProceedResult, ext: string, opt: ReadingOption): ProceedResult {
+    switch (ext) {
+        case "":
+        case "console":
+        case "txt":
+            return officeExtractTxt(res, opt)
+
+        case "json":
+            return officeExtractJson(res)
+
+        default:
+            return res
+    }
+}
+
+function officeExtractTxt(res: ProceedResult, opt: ReadingOption): ProceedResult {
     if (res.office === undefined) {
         return res
     }
-    const texts = officeConv2SimplifiedText(res.office.srcs)
-    texts.forEach(text => {
-        res.result.push(text.join(""))
-    })
+    const texts = opt.common.withSeparator
+        ? officeConv2MarkedText(res.office.srcs, opt) : officeConv2SimplifiedText(res.office.srcs)
+    res.result = [...texts]
     return res
 }
 
@@ -256,16 +325,15 @@ function officeExtractJson(res: ProceedResult): ProceedResult {
     if (res.office === undefined) {
         return res
     }
-    res.office.srcs.forEach(file => {
-        res.result.push(JSON.stringify(file, null, 2))
-    })
-    res.office.tgts.forEach(file => {
-        res.result.push(JSON.stringify(file, null, 2))
-    })
+    const data = {
+        srcs: res.office.srcs,
+        tgts: res.office.tgts
+    }
+    res.result.push(JSON.stringify(data, null, 2))
     return res
 }
 
-function officeAlignTsv(res: ProceedResult, opt: ReadingOption): ProceedResult {
+function officeAlign(res: ProceedResult, opt: ReadingOption): ProceedResult {
     if (res.office === undefined) {
         return res
     }
@@ -274,7 +342,7 @@ function officeAlignTsv(res: ProceedResult, opt: ReadingOption): ProceedResult {
 }
 
 
-function officeCountTsv(res: ProceedResult): ProceedResult {
+function officeCount(res: ProceedResult, ext: string): ProceedResult {
     if (res.office === undefined) {
         return res
     }
@@ -283,6 +351,7 @@ function officeCountTsv(res: ProceedResult): ProceedResult {
         charas: 0,
         words: 0,
     }
+    const delimiter = ext === "csv" ? "," : "\t"
     res.count = []
     res.count.push(sumCount)
     res.office.srcs.forEach(file => {
@@ -301,9 +370,9 @@ function officeCountTsv(res: ProceedResult): ProceedResult {
         sumCount.charas += countInFile.charas
         sumCount.words += countInFile.words
     })
-    res.result.push("NAME\tCHARAS\tWORDS")
+    res.result.push(`NAME${delimiter}CHARAS${delimiter}WORDS`)
     res.count.forEach(file => {
-        res.result.push(`${file.name}\t${file.charas}\t${file.words}`)
+        res.result.push(`${file.name}${delimiter}${file.charas}${delimiter}${file.words}`)
     })
     return res
 }

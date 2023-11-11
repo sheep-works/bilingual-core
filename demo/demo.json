@@ -1,66 +1,108 @@
 {
-  "name": "./demo/demo.docx",
-  "format": "docx",
-  "exts": [
+  "srcs": [
     {
-      "type": "Word-Paragraph",
-      "position": 0,
-      "isActive": true,
-      "value": [
-        "ビデオを使うと、伝えたい内容を明確に表現できます。",
-        "[オンライン ビデオ] をクリックすると、追加したいビデオを、それに応じた埋め込みコードの形式で貼り付けできるようになります。",
-        "キーワードを入力して、文書に最適なビデオをオンラインで検索することもできます。"
-      ],
-      "sumCharas": 127,
-      "sumWords": 5
+      "name": "./demo/demo.docx",
+      "format": "docx",
+      "exts": [
+        {
+          "type": "Word-Paragraph",
+          "position": 0,
+          "isActive": true,
+          "value": [
+            "ビデオを使うと、伝えたい内容を明確に表現できます。[オンライン ビデオ] をクリックすると、追加したいビデオを、それに応じた埋め込みコードの形式で貼り付けできるようになります。キーワードを入力して、文書に最適なビデオをオンラインで検索することもできます。"
+          ],
+          "sumCharas": 125,
+          "sumWords": 3
+        },
+        {
+          "type": "Word-Paragraph",
+          "position": 1,
+          "isActive": true,
+          "value": [
+            "Word に用意されているヘッダー、フッター、表紙、テキスト ボックス デザインを組み合わせると、プロのようなできばえの文書を作成できます。たとえば、一致する表紙、ヘッダー、サイドバーを追加できます。[挿入] をクリックしてから、それぞれのギャラリーで目的の要素を選んでください。"
+          ],
+          "sumCharas": 136,
+          "sumWords": 5
+        },
+        {
+          "type": "Word-Paragraph",
+          "position": 2,
+          "isActive": true,
+          "value": [
+            "テーマとスタイルを使って、文書全体の統一感を出すこともできます。[デザイン] をクリックし新しいテーマを選ぶと、図やグラフ、SmartArt グラフィックが新しいテーマに合わせて変わります。スタイルを適用すると、新しいテーマに適合するように見出しが変更されます。"
+          ],
+          "sumCharas": 129,
+          "sumWords": 3
+        },
+        {
+          "type": "Word-Paragraph",
+          "position": 3,
+          "isActive": true,
+          "value": [
+            "Word では、必要に応じてその場に新しいボタンが表示されるため、効率よく操作を進めることができます。文書内に写真をレイアウトする方法を変更するには、写真をクリックすると、隣にレイアウト オプションのボタンが表示されます。表で作業している場合は、行または列を追加する場所をクリックして、プラス記号をクリックします。"
+          ],
+          "sumCharas": 155,
+          "sumWords": 3
+        },
+        {
+          "type": "Word-Paragraph",
+          "position": 4,
+          "isActive": true,
+          "value": [
+            "新しい閲覧ビューが導入され、閲覧もさらに便利になりました。文書の一部を折りたたんで、必要な箇所に集中することができます。最後まで読み終わる前に中止する必要がある場合、Word では、たとえ別のデバイスであっても、どこまで読んだかが記憶されます。"
+          ],
+          "sumCharas": 121,
+          "sumWords": 2
+        }
+      ]
     },
     {
-      "type": "Word-Paragraph",
-      "position": 1,
-      "isActive": true,
-      "value": [
-        "Word に用意されているヘッダー、フッター、表紙、テキスト ボックス デザインを組み合わせると、プロのようなできばえの文書を作成できます。",
-        "たとえば、一致する表紙、ヘッダー、サイドバーを追加できます。",
-        "[挿入] をクリックしてから、それぞれのギャラリーで目的の要素を選んでください。"
-      ],
-      "sumCharas": 138,
-      "sumWords": 7
+      "name": "./demo/demo.xlsx",
+      "format": "xlsx",
+      "exts": [
+        {
+          "type": "Excel-Sheet",
+          "position": 1,
+          "isActive": true,
+          "value": [
+            "aaaa",
+            "bbbbb",
+            "dddd",
+            "eeee"
+          ],
+          "sumCharas": 20,
+          "sumWords": 4
+        }
+      ]
     },
     {
-      "type": "Word-Paragraph",
-      "position": 2,
-      "isActive": true,
-      "value": [
-        "テーマとスタイルを使って、文書全体の統一感を出すこともできます。",
-        "[デザイン] をクリックし新しいテーマを選ぶと、図やグラフ、SmartArt グラフィックが新しいテーマに合わせて変わります。",
-        "スタイルを適用すると、新しいテーマに適合するように見出しが変更されます。"
-      ],
-      "sumCharas": 131,
-      "sumWords": 5
-    },
-    {
-      "type": "Word-Paragraph",
-      "position": 3,
-      "isActive": true,
-      "value": [
-        "Word では、必要に応じてその場に新しいボタンが表示されるため、効率よく操作を進めることができます。",
-        "文書内に写真をレイアウトする方法を変更するには、写真をクリックすると、隣にレイアウト オプションのボタンが表示されます。",
-        "表で作業している場合は、行または列を追加する場所をクリックして、プラス記号をクリックします。"
-      ],
-      "sumCharas": 157,
-      "sumWords": 5
-    },
-    {
-      "type": "Word-Paragraph",
-      "position": 4,
-      "isActive": true,
-      "value": [
-        "新しい閲覧ビューが導入され、閲覧もさらに便利になりました。",
-        "文書の一部を折りたたんで、必要な箇所に集中することができます。",
-        "最後まで読み終わる前に中止する必要がある場合、Word では、たとえ別のデバイスであっても、どこまで読んだかが記憶されます。"
-      ],
-      "sumCharas": 123,
-      "sumWords": 4
+      "name": "./demo/demo.pptx",
+      "format": "pptx",
+      "exts": [
+        {
+          "type": "PPT-Slide",
+          "position": 1,
+          "isActive": true,
+          "value": [
+            "title",
+            "subtitle"
+          ],
+          "sumCharas": 14,
+          "sumWords": 2
+        },
+        {
+          "type": "PPT-Note",
+          "position": 1,
+          "isActive": true,
+          "value": [
+            "note",
+            ""
+          ],
+          "sumCharas": 5,
+          "sumWords": 1
+        }
+      ]
     }
-  ]
+  ],
+  "tgts": []
 }

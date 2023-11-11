@@ -1,11 +1,12 @@
 declare interface PresetOptions {
+    description: string
     mode: import("../util/params").ModeCombinations
     console: boolean
     outputFile: string
     sourceFiles: string | string[]
     targetFiles: string | string[]
+    common?: CommonOption
     office?: {
-        common: CommonOption
         word: WordOption
         excel: ExcelOption
         ppt: PptOption

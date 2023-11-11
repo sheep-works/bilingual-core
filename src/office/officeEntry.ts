@@ -4,7 +4,7 @@ import { xlsxReader } from './xlsxReader'
 import { pptxReader } from './pptxReader'
 // import { pdfReader } from '../../old/pdfRead/pdfRead'
 
-export async function officeBuffer2Extract(datum: ReadData, opt: ReadingOption): Promise<OfficeContent> {
+export async function getOfficeContentFromBuffer(datum: ReadData, opt: ReadingOption): Promise<OfficeContent> {
   return new Promise(async (resolve, reject) => {
     if (datum.name.endsWith('.docx') || datum.name.endsWith('.docm')) {
       resolve(await docxReader(datum.data, datum.name, opt))
@@ -29,11 +29,11 @@ export async function officeBuffer2Extract(datum: ReadData, opt: ReadingOption):
   })
 }
 
-export async function batchOfficeBuffer2Extract(data: ReadData[], opt: ReadingOption): Promise<OfficeContent[]> {
+export async function batchGetOfficeContentFromBuffer(data: ReadData[], opt: ReadingOption): Promise<OfficeContent[]> {
   return new Promise(async (resolve, reject) => {
     const prs: Promise<OfficeContent>[] = []
     for (const datum of data) {
-      prs.push(officeBuffer2Extract(datum, opt))
+      prs.push(getOfficeContentFromBuffer(datum, opt))
     }
     Promise.all(prs)
       .then(result => {
@@ -45,14 +45,14 @@ export async function batchOfficeBuffer2Extract(data: ReadData[], opt: ReadingOp
   })
 }
 
-export async function officeExtract(srcFiles: ReadData[], tgtFiles: ReadData[], opt: ReadingOption): Promise<OfficeResult> {
+export async function getOfficeContent(srcFiles: ReadData[], tgtFiles: ReadData[], opt: ReadingOption): Promise<OfficeResult> {
   return new Promise(async (resolve, reject) => {
     try {
-      const srcs = await batchOfficeBuffer2Extract(srcFiles, opt)
-      const tgts = await batchOfficeBuffer2Extract(tgtFiles, opt)
-      resolve({srcs, tgts})  
+      const srcs = await batchGetOfficeContentFromBuffer(srcFiles, opt)
+      const tgts = await batchGetOfficeContentFromBuffer(tgtFiles, opt)
+      resolve({ srcs, tgts })
     } catch (e) {
       reject(e)
-    }   
+    }
   })
 }

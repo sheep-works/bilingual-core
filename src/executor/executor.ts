@@ -36,7 +36,7 @@ function fileProceed(exec: ExecutableOption): Promise<ProceedResult> {
                         reject(err)
                     })
                 break
-        
+
             default:
                 break;
         }

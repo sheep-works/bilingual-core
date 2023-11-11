@@ -1,5 +1,5 @@
-import { writeFileSync } from "fs"
-import { useResponseMessage } from "../util/util"
+import { write, writeFileSync } from "fs"
+import { useResponseMessage, str2NameAndExtension } from "../util/util"
 
 export function outputProceed(res: ProceedResult, output: string): Promise<ResponseMessage> {
     return new Promise((resolve, reject) => {
@@ -17,10 +17,14 @@ export function outputProceed(res: ProceedResult, output: string): Promise<Respo
                 break
             }
 
+            case "txt": {
+                writeFileSync(output, res.result.join("\n"))
+                break;
+            }
+
             case "csv":
             case "tsv": {
-                writeFileSync(output,
-                    ext === "tsv" ? res.result.join("\n") : res.result.join("\n").replace("\t", ","))
+                writeFileSync(output, res.result.join("\n"))
                 const message = useResponseMessage({
                     isErr: false,
                     code: "200",
@@ -52,20 +56,4 @@ export function outputProceed(res: ProceedResult, output: string): Promise<Respo
                 break
         }
     })
-}
-
-function str2NameAndExtension(str: string): [string, string] {
-    const strs = str.split(".")
-    if (strs.length === 1) {
-        return ["", strs[0]]
-    }
-    else if (strs.length === 2) {
-        return [strs[0], strs[1]]
-    }
-    else {
-        const last = strs[strs.length - 1]
-        const others = strs.slice(0, strs.length - 1)
-        return [others.join("."), last]
-    }
-
 }

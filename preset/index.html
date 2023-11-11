@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,29 +10,137 @@
         body {
             padding: 30px;
         }
+
         pre {
             background-color: blanchedalmond;
             border: solid;
             padding: 1.5em;
         }
+
+        section {
+            border-bottom: dashed;
+            margin-bottom: 5px;
+        }
+
+        div.input-section {
+            margin: 10px;
+        }
     </style>
 </head>
+
 <body>
     <div id="app">
-        <div>
-            <label for="mode1">対象</label>
-            <select v-model="mode1" name="mode1">
-                <option v-for="md1 in selector.mode1">{{ md1 }}<option>
-            </select>
-        </div>
-        <div>
-            <label for="mode2">機能</label>
-            <select v-model="mode2" name="mode2">
-                <option v-for="md2 in selector.mode2">{{ md2 }}<option>
-            </select>
-        </div>
+        <section>
+            <div class="input-section">
+                <label for="mode1">対象</label>
+                <select v-model="mode1" name="mode1" @change="setDefaultMode2">
+                    <option v-for="md1 in selector.mode1">{{ md1 }}
+                    <option>
+                </select>
+            </div>
+            <div class="input-section">
+                <label for="mode2">機能</label>
+                <select v-model="mode2" name="mode2" @change="setDefaultExtension">
+                    <option v-for="md2 in mode2Opts">{{ md2 }}
+                    <option>
+                </select>
+            </div>
+            <div class="input-section">
+                <label for="output-name">出力ファイル</label>
+                <input type="text" name="output-name" v-model="outputFile" />
+                <select v-model="ext">
+                    <option v-for="extOpt in extOpts">{{ extOpt }}</option>
+                </select>
+            </div>
+            <div class="input-section">
+                <label for="src-files">原文ファイル</label>
+                <input type="text" name="src-files" v-model="sourceFiles" />
+            </div class="input-section">
+            <div class="input-section" v-if="mode2==='ALIGN'">
+                <label for="src-files">訳文ファイル</label>
+                <input type="text" name="src-files" v-model="sourceFiles" />
+            </div>
+        </section>
+        <section>
+            <div class="input-section">
+                <label for="segmentation">セグメンテーション</label>
+                <input type="checkbox" name="segmentation" v-model="common.segmentation" />
+            </div>
+            <div class="input-section">
+                <label for="delimiters">文区切り</label>
+                <input type="text" name="delimiters" v-model="common.delimiters" />
+            </div>
+            <div class="input-section">
+                <label for="excluding">除外</label>
+                <input type="checkbox" name="excluding" v-model="common.excluding" />
+            </div>
+            <div class="input-section">
+                <label for="excludePattern">除外パターン</label>
+                <input type="text" name="excludePattern" v-model="common.excludePattern" />
+            </div>
+            <div class="input-section">
+                <label for="withSeparator">区切り記号</label>
+                <input type="checkbox" name="withSeparator" v-model="common.withSeparator" />
+            </div>
+        </section>
+
+        <section>
+            <div class="input-section">
+                <label for="afterRev">Word-修正履歴</label>
+                <input type="checkbox" name="afterRev" v-model="office.word.afterRev" />
+            </div>
+            <div class="input-section" v-if="mode2==='ALIGN'">
+                <label for="afterRev2">Word-修正履歴（訳文）</label>
+                <input type="checkbox" name="afterRev2" v-model="office.word.afterRev2" />
+            </div>
+            <div class="input-section">
+                <label for="readFilledCell">Excel-色つきセル読み取り</label>
+                <input type="checkbox" name="readFilledCell" v-model="office.excel.readFilledCell" />
+            </div>
+            <div class="input-section">
+                <label for="readHiddenSheet">Excel-隠しシート読み取り</label>
+                <input type="checkbox" name="readHiddenSheet" v-model="office.excel.readHiddenSheet" />
+            </div>
+            <div class="input-section">
+                <label for="readSlide">PPT-スライド読み取り</label>
+                <input type="checkbox" name="readSlide" v-model="office.ppt.readSlide" />
+            </div>
+            <div class="input-section">
+                <label for="readNote">PPT-ノート読み取り</label>
+                <input type="checkbox" name="readNote" v-model="office.ppt.readNote" />
+            </div>
+        </section>
+        <section>
+            <div class="input-section">
+                <label for="dupli">重複</label>
+                <input type="number" name="dupli" v-model="wwc.dupli" />
+            </div>
+            <div class="input-section">
+                <label for="over95">95%-</label>
+                <input type="number" name="over95" v-model="wwc.over95" />
+            </div>
+            <div class="input-section">
+                <label for="over85">85%-94%</label>
+                <input type="number" name="over85" v-model="wwc.over85" />
+            </div>
+            <div class="input-section">
+                <label for="over75">75%-84%</label>
+                <input type="number" name="over75" v-model="wwc.over75" />
+            </div>
+            <div class="input-section">
+                <label for="over50">50%-74%</label>
+                <input type="number" name="over50" v-model="wwc.over50" />
+            </div>
+            <div class="input-section">
+                <label for="under49">-49%</label>
+                <input type="number" name="under49" v-model="wwc.under49" />
+            </div>
+        </section>
+
         <pre><code>{{ preset }}</code></pre>
+        <button @click="copyConfig">COPY</button>
     </div>
     <script src="./scripts/main.js"></script>
 </body>
+
 </html>

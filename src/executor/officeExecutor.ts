@@ -296,7 +296,7 @@ function officeConv2AlignedText(srcs: OfficeContent[], tgts: OfficeContent[], op
     return aligned;
 }
 
-function officeExtract(res: ProceedResult, ext: string, opt: ReadingOption): ProceedResult {
+export function officeExtract(res: ProceedResult, ext: string, opt: ReadingOption): ProceedResult {
     switch (ext) {
         case "":
         case "console":
@@ -333,7 +333,7 @@ function officeExtractJson(res: ProceedResult): ProceedResult {
     return res
 }
 
-function officeAlign(res: ProceedResult, opt: ReadingOption): ProceedResult {
+export function officeAlign(res: ProceedResult, opt: ReadingOption): ProceedResult {
     if (res.office === undefined) {
         return res
     }
@@ -342,7 +342,7 @@ function officeAlign(res: ProceedResult, opt: ReadingOption): ProceedResult {
 }
 
 
-function officeCount(res: ProceedResult, ext: string): ProceedResult {
+export function officeCount(res: ProceedResult, ext: string): ProceedResult {
     if (res.office === undefined) {
         return res
     }

@@ -35,7 +35,7 @@ export function outputProceed(res: ProceedResult, output: string): Promise<Respo
             }
 
             case "json": {
-                writeFileSync(output, res.result[0])
+                writeFileSync(output, JSON.stringify(res))
                 const message = useResponseMessage({
                     isErr: false,
                     code: "200",

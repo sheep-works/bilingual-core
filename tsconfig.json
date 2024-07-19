@@ -1,32 +1,32 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "CommonJS",
-      "strict": true,
-      "importHelpers": true,
-      "moduleResolution": "node",
-      "experimentalDecorators": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "sourceMap": false,
-      "baseUrl": "./src/",
-      "downlevelIteration": true,
-      "outDir": "./dist",
-      "resolveJsonModule": true,
-      "types": [
-        "node",
-      ],
-      "lib": [
-        "esnext",
-        "scripthost"
-      ],
-    },
-    "include": [
-      "src/**/*",
-      "types"
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "strict": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "baseUrl": "./src/",
+    "downlevelIteration": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "types": [
+      "node",
     ],
-    "exclude": [
-      "node_modules",
-      "old/*"
-    ]
-  }
+    "lib": [
+      "esnext",
+      "scripthost"
+    ],
+  },
+  "include": [
+    "src/**/*",
+    "types"
+  ],
+  "exclude": [
+    "node_modules",
+    "old/*"
+  ]
+}

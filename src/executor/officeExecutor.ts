@@ -1,5 +1,6 @@
 import { useResponseMessage, str2NameAndExtension } from "../util/util"
 import { getOfficeContent } from "../office/officeEntry"
+import { DiffCalculator } from "./diffCalc"
 
 export function officeExecutor(exec: ExecutableOption): Promise<ProceedResult> {
     return new Promise(async (resolve, reject) => {
@@ -33,6 +34,10 @@ export function officeExecutor(exec: ExecutableOption): Promise<ProceedResult> {
 
                         case "COUNT":
                             resolve(officeCount(res, ext))
+                            break
+
+                        case "DIFF":
+                            resolve(officeDiff(res, exec.opt))
                             break
 
                         default: {
@@ -376,4 +381,20 @@ export function officeCount(res: ProceedResult, ext: string): ProceedResult {
         res.result.push(`${file.name}${delimiter}${file.charas}${delimiter}${file.words}`)
     })
     return res
+}
+
+export function officeDiff(res: ProceedResult, opt: ReadingOption): ProceedResult {
+    if (res.office === undefined) {
+        return res
+    }
+    else {
+        const diff = new DiffCalculator()
+        diff.setOptions(opt)
+        diff.analyze(res.office.srcs)
+        diff.calcWWC(opt.common.countUnit, opt.wwc)
+        res.diffs = diff.dsegs
+        res.wwc = diff.report
+        return res
+    }
+
 }

@@ -5,6 +5,7 @@ declare interface CommonOption {
     excluding: boolean;
     excludePattern: string;
     withSeparator: boolean;
+    countUnit: 'chara' | 'word'
 }
 
 declare interface WordOption {

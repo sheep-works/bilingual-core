@@ -17,6 +17,7 @@ export function createCommonOption(common?: Partial<CommonOption>): CommonOption
       ? common.withSeparator !== undefined
         ? common.withSeparator : true
       : true,
+    countUnit: common !== undefined ? common.countUnit || 'chara' : 'chara'
   }
   return opt
 }

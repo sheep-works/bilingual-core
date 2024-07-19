@@ -14,5 +14,7 @@ declare interface ProceedResult {
     message: string
     office?: OfficeResult
     count?: CountResult[]
+    wwc?: WWCReport
+    diffs?: DiffSeg[]
     result: string[]
 }

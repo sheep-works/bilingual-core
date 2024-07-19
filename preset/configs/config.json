@@ -1,8 +1,8 @@
 {
     "description": "Officeファイルから抽出してシンプルなテキストに",
-    "mode": "OFFICE:EXTRACT",
+    "mode": "OFFICE:DIFF",
     "console": false,
-    "outputFile": "./demo/demo.txt",
+    "outputFile": "./demo/diff2.json",
     "sourceFiles": [
         "./demo/demo.docx",
         "./demo/demo.xlsx",

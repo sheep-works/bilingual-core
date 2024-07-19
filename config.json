@@ -1,8 +1,8 @@
 {
-    "description": "Officeファイルから抽出して区切り文字も追加したテキストに",
-    "mode": "OFFICE:EXTRACT",
+    "description": "Officeファイルから抽出して差分解析",
+    "mode": "OFFICE:DIFF",
     "console": false,
-    "outputFile": "./demo/demo.json",
+    "outputFile": "./demo/diff.json",
     "sourceFiles": [
         "./demo/demo.docx",
         "./demo/demo.xlsx",

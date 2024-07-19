@@ -1,9 +1,11 @@
-const JSZip = require('jszip');
+// const JSZip = require('jszip');
 
+import JSZip from 'jszip'
+import { DOMParser as dom } from 'xmldom'
 import { applySegRules, countCharas, countWords, checkValidText } from '../util/util';
 
 // Wordファイルの読み込みに使用
-export async function docxReader(docxFile: Buffer, fileName: string, opt: ReadingOption, isAlignTgt: boolean = false): Promise<OfficeContent> {
+export async function docxReader(docxFile: Buffer | ArrayBuffer, fileName: string, opt: ReadingOption, isAlignTgt: boolean = false): Promise<OfficeContent> {
   return new Promise((resolve, reject) => {
     const zip = new JSZip();
     const wordContents: OfficeContent = {
@@ -18,7 +20,7 @@ export async function docxReader(docxFile: Buffer, fileName: string, opt: Readin
       if (inzip !== null) {
         inzip.file('word/document.xml').async('string').then((wordxml: string) => {
           // Wordファイルは修正履歴などの順番を保つ必要があるため、xml2js ではなく xmldom を使う
-          const dom: any = require('xmldom').DOMParser;
+          // const dom: any = require('xmldom').DOMParser;
           const doc: any = new dom().parseFromString(wordxml);
           // root > w:document
           const docNd: any = doc.lastChild || {};

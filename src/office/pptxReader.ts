@@ -1,10 +1,11 @@
-const JSZip = require('jszip');
+// const JSZip = require('jszip');
+import JSZip from 'jszip'
 import { parseString } from 'xml2js';
 
 import { applySegRules, countCharas, countWords } from '../util/util';
 
 // PPTファイルを読み込むための関数
-export async function pptxReader(pptxFile: any, fileName: string, opt: ReadingOption): Promise<OfficeContent> {
+export async function pptxReader(pptxFile: Buffer | ArrayBuffer, fileName: string, opt: ReadingOption): Promise<OfficeContent> {
   return new Promise((resolve, reject) => {
     const zip = new JSZip();
     zip.loadAsync(pptxFile).then((inzip: any) => {

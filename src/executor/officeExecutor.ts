@@ -318,6 +318,7 @@ function officeExtractTxt(res: ProceedResult, opt: ReadingOption): ProceedResult
     const texts = opt.common.withSeparator
         ? officeConv2MarkedText(res.office.srcs, opt) : officeConv2SimplifiedText(res.office.srcs)
     res.result = [...texts]
+    res.isSuccess = true
     return res
 }
 

@@ -25,5 +25,5 @@ declare interface SimpleContent {
 
 declare interface ReadData {
   name: string
-  data: Buffer
+  data: Buffer | ArrayBuffer
 }

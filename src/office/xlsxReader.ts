@@ -1,9 +1,10 @@
-const JSZip = require('jszip');
+// const JSZip = require('jszip');
+import JSZip from 'jszip'
 import { parseString } from 'xml2js';
 import { applySegRules, countCharas, countWords, checkValidText } from '../util/util';
 
 // Excelファイルを読み込むための関数
-export async function xlsxReader(xlsxFile: any, fileName: string, opt: ReadingOption): Promise<OfficeContent> {
+export async function xlsxReader(xlsxFile: Buffer | ArrayBuffer, fileName: string, opt: ReadingOption): Promise<OfficeContent> {
   return new Promise((resolve, reject) => {
     const zip = new JSZip();
     zip.loadAsync(xlsxFile).then((inzip: any) => {

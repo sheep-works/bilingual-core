@@ -16,4 +16,3 @@ declare interface ProceedResult {
     count?: CountResult[]
     result: string[]
 }
-
